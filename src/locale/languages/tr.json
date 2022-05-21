@@ -1,0 +1,12 @@
+{
+  "signUp": "Kayit ol",
+  "username": "Kullanici Adi",
+  "email": "E-posta",
+  "password": "Sifre",
+  "passwordRepeat": "Sifre Tekrari",
+  "passwordMissmatchValidation": "Sifreniz eslesmiyor",
+  "users": "Kullanicilar",
+  "nextPage": "sonraki >",
+  "previousPage": "< onceki",
+  "login": "Oturum ac"
+}
