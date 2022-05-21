@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import useHover from "../hooks/useHover";
 
-export default function LanguageSelector({}) {
+export default function LanguageSelector() {
   const {
     i18n: { changeLanguage },
   } = useTranslation();

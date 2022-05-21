@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import Input from "../components/Input";
 import { signUp } from "../api/apiCalls";
 import Alert from "../components/Alert";
-import Spinner from "../components/Spinner";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 
 export default function SignupPage() {

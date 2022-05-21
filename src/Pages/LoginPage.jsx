@@ -5,7 +5,6 @@ import { logIn } from "../api/apiCalls";
 import Alert from "../components/Alert";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import Input from "../components/Input";
-import Spinner from "../components/Spinner";
 
 export default function LoginPage({ setAuth }) {
   const { t } = useTranslation();
