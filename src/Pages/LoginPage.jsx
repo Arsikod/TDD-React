@@ -40,7 +40,7 @@ export default function LoginPage() {
 
       setApiStatus("isSuccess");
       navigate("/");
-      setAuth({ isLoggedIn: true, id: response.data.id });
+      setAuth({ isLoggedIn: true, ...response.data });
     } catch (error) {
       setApiStatus("isError");
       setValidationError(error.response?.data.message);

@@ -9,8 +9,7 @@ import en from "./locale/languages/en.json";
 
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import HomePage from "./Pages/HomePage";
-import LoginPage from "./Pages/LoginPage";
+import storage from "./state/storage";
 
 const page1 = {
   content: [
@@ -208,5 +207,20 @@ describe("Login", () => {
 
     await screen.findByTestId("user-page");
     await screen.findByText("user5");
+  });
+
+  it("stores loggedIn state in local storage", async () => {
+    setupLoggedIn();
+    await screen.findByTestId("home-page");
+    const state = storage.getItem("auth");
+    expect(state.isLoggedIn).toBeTruthy();
+  });
+
+  it("displays layout of logged in state", () => {
+    storage.setItem("auth", { isLoggedIn: true });
+    setup("/");
+
+    const myProfileLink = screen.queryByRole("link", { name: "My profile" });
+    expect(myProfileLink).toBeInTheDocument();
   });
 });

@@ -15,6 +15,7 @@ import tr from "../locale/languages/tr.json";
 
 import { setupServer } from "msw/node";
 import { rest } from "msw";
+import storage from "../state/storage";
 
 let requestBody,
   acceptLanguageHeader,
@@ -92,7 +93,7 @@ describe("Login page", () => {
 
   describe("Interactions", () => {
     let loginButton, emailInput, passwordInput;
-    function renderSetup() {
+    function renderSetup(email = "user100@mail.com") {
       render(
         <Router>
           <LoginPage />
@@ -102,7 +103,7 @@ describe("Login page", () => {
       passwordInput = screen.getByLabelText("Password");
       loginButton = screen.queryByRole("button", { name: "Login" });
 
-      userEvent.type(emailInput, "user100@mail.com");
+      userEvent.type(emailInput, email);
       userEvent.type(passwordInput, "P4ssword");
     }
 
@@ -170,6 +171,27 @@ describe("Login page", () => {
 
       userEvent.type(passwordInput, "newP4ssword");
       expect(errorMsg).not.toBeInTheDocument();
+    });
+
+    it("stores id, username and image in storage", async () => {
+      server.use(
+        rest.post("/api/1.0/auth", (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json({ id: 5, username: "user5", image: null })
+          );
+        })
+      );
+
+      renderSetup("user5@mail.com");
+      userEvent.click(loginButton);
+      const spinner = screen.queryByRole("status", { hidden: true });
+      await waitForElementToBeRemoved(spinner);
+      const storedState = storage.getItem("auth");
+      const authFields = Object.keys(storedState);
+      expect(authFields.includes("id")).toBeTruthy();
+      expect(authFields.includes("username")).toBeTruthy();
+      expect(authFields.includes("image")).toBeTruthy();
     });
   });
 
