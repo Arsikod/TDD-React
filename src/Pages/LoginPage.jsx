@@ -5,10 +5,12 @@ import { logIn } from "../api/apiCalls";
 import Alert from "../components/Alert";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import Input from "../components/Input";
+import { useAuthContext } from "../context/AuthContextProvider";
 
-export default function LoginPage({ setAuth }) {
+export default function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { setAuth } = useAuthContext();
 
   const [apiStatus, setApiStatus] = useState("isIdle");
 

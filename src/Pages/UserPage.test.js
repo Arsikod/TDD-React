@@ -1,4 +1,9 @@
-import { getByRole, render, screen, waitFor } from "@testing-library/react";
+import {
+  getByRole,
+  render,
+  screen,
+  waitFor,
+} from "../test-utils/testing-library-utils";
 import { MemoryRouter, Routes, Route } from "react-router";
 
 import { rest } from "msw";

@@ -10,17 +10,15 @@ import NavBar from "./components/NavBar";
 import AuthContextProvider from "./context/AuthContextProvider";
 
 function App() {
-  const [auth, setAuth] = useState({ isLoggedIn: false, id: "" });
-
   return (
-    <AuthContextProvider value={{ auth, setAuth }}>
+    <AuthContextProvider>
       <LanguageSelector />
       <NavBar />
       <div className="container pt-3">
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage setAuth={setAuth} />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/user/:id" element={<UserPage />} />
           <Route path="/activate/:token" element={<AccountActivationPage />} />
         </Routes>

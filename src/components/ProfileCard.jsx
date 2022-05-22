@@ -1,7 +1,10 @@
 import React from "react";
 import defaultProfileImg from "../assets/profile.png";
+import { useAuthContext } from "../context/AuthContextProvider";
 
-export default function ProfileCard({ user, auth }) {
+export default function ProfileCard({ user }) {
+  const { auth } = useAuthContext();
+
   return (
     <div className="card text-center">
       <div className="card-header">

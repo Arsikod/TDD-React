@@ -2,7 +2,7 @@ import {
   render,
   screen,
   waitForElementToBeRemoved,
-} from "@testing-library/react";
+} from "../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 import { BrowserRouter as Router } from "react-router-dom";
