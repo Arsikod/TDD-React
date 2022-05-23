@@ -19,6 +19,12 @@ const server = setupServer(
     header = req.headers.get("Authorization");
 
     return res(ctx.status(200));
+  }),
+
+  rest.delete("/api/1.0/users/:id", (req, res, ctx) => {
+    id = req.params.id;
+    header = req.headers.get("Authorization");
+    return res(ctx.status(200));
   })
 );
 
@@ -237,5 +243,85 @@ describe("Profile Card", () => {
     expect(
       screen.queryByRole("button", { name: "Delete my account" })
     ).not.toBeInTheDocument();
+  });
+
+  it("displays modal after clicking delete button", () => {
+    setup();
+    expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
+
+    const deleteButton = screen.queryByRole("button", {
+      name: "Delete my account",
+    });
+    userEvent.click(deleteButton);
+
+    const modal = screen.queryByTestId("modal");
+
+    expect(modal).toBeInTheDocument();
+  });
+
+  it("displays confirmation question with cancel and confirm buttons", () => {
+    setup();
+
+    const deleteButton = screen.queryByRole("button", {
+      name: "Delete my account",
+    });
+    userEvent.click(deleteButton);
+
+    expect(
+      screen.queryByText("Are you sure you want to delete your account?")
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole("button", { name: "Cancel" })
+    ).toBeInTheDocument();
+
+    expect(screen.queryByRole("button", { name: "Yes" })).toBeInTheDocument();
+  });
+
+  it("removes modal after clicking cancel", () => {
+    setup();
+    const deleteButton = screen.queryByRole("button", {
+      name: "Delete my account",
+    });
+    userEvent.click(deleteButton);
+    userEvent.click(screen.queryByRole("button", { name: "Cancel" }));
+
+    const modal = screen.queryByTestId("modal");
+
+    expect(modal).not.toBeInTheDocument();
+  });
+
+  it("displays spinner while delete api call in progress", async () => {
+    setup();
+    const deleteButton = screen.queryByRole("button", {
+      name: "Delete my account",
+    });
+
+    userEvent.click(deleteButton);
+
+    expect(
+      screen.queryByRole("status", { hidden: true })
+    ).not.toBeInTheDocument();
+
+    userEvent.click(screen.getByRole("button", { name: "Yes" }));
+
+    const spinner = screen.getByRole("status", { hidden: true });
+    await waitForElementToBeRemoved(spinner);
+  });
+
+  it("sends logged in user id and authorization header in delete api call", async () => {
+    setup();
+    const deleteButton = screen.queryByRole("button", {
+      name: "Delete my account",
+    });
+
+    userEvent.click(deleteButton);
+    userEvent.click(screen.getByRole("button", { name: "Yes" }));
+
+    const spinner = screen.getByRole("status", { hidden: true });
+    await waitForElementToBeRemoved(spinner);
+
+    expect(header).toBe("auth header value");
+    expect(id).toBe("5");
   });
 });
