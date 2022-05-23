@@ -4,7 +4,7 @@ import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
 import UserPage from "./Pages/UserPage";
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import AccountActivationPage from "./Pages/AccountActivationPage";
 import NavBar from "./components/NavBar";
 import AuthContextProvider from "./context/AuthContextProvider";

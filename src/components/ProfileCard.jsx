@@ -49,12 +49,15 @@ export default function ProfileCard({ user }) {
       )}
 
       {user?.id === auth?.id && !isEditMode && (
-        <button
-          className="btn btn-outline-success"
-          onClick={() => setIsEditMode(true)}
-        >
-          Edit
-        </button>
+        <>
+          <button
+            className="btn btn-outline-success"
+            onClick={() => setIsEditMode(true)}
+          >
+            Edit
+          </button>
+          <button className="btn btn-danger mt-2">Delete my account</button>
+        </>
       )}
       {isEditMode && (
         <>
