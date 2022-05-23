@@ -8,6 +8,7 @@ import UserList from "./UserList";
 import en from "../locale/languages/en.json";
 import tr from "../locale/languages/tr.json";
 import LanguageSelector from "./LanguageSelector";
+import storage from "../state/storage";
 
 const users = [
   { id: 1, username: "user1", email: "user1@mail.com", image: null },
@@ -32,8 +33,10 @@ const getPage = (page, size) => {
   };
 };
 
+let header;
 const server = setupServer(
   rest.get("/api/1.0/users", (req, res, ctx) => {
+    header = req.headers.get("Authorization");
     let page = parseInt(req.url.searchParams.get("page"));
     let size = parseInt(req.url.searchParams.get("size"));
 
@@ -133,6 +136,17 @@ describe("User List", () => {
 
       await screen.findByText("user1");
       expect(spinner).not.toBeInTheDocument();
+    });
+
+    it("sends request with authorization header", async () => {
+      storage.setItem("auth", {
+        id: 5,
+        username: "user5",
+        header: "auth header value",
+      });
+      setup();
+      await screen.findByText("user1");
+      expect(header).toBe("auth header value");
     });
   });
 

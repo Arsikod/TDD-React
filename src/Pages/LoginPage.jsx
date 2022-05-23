@@ -40,7 +40,12 @@ export default function LoginPage() {
 
       setApiStatus("isSuccess");
       navigate("/");
-      setAuth({ isLoggedIn: true, ...response.data });
+
+      setAuth({
+        isLoggedIn: true,
+        header: `Bearer ${response.data.token}`,
+        ...response.data,
+      });
     } catch (error) {
       setApiStatus("isError");
       setValidationError(error.response?.data.message);

@@ -1,10 +1,9 @@
 import React from "react";
 
 export default function Input(props) {
-  const { id, label, onChange, help, type = "text" } = props;
+  const { id, label, onChange, help, type = "text", initialValue } = props;
 
   let inputClass = "form-control";
-
   if (help) {
     inputClass += " is-invalid";
   }
@@ -20,6 +19,7 @@ export default function Input(props) {
         id={id}
         name={id}
         onChange={onChange}
+        defaultValue={initialValue}
       />
       {help && <span className="invalid-feedback">{help}</span>}
     </div>

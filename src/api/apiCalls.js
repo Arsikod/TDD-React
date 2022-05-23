@@ -1,8 +1,13 @@
 import axios from "axios";
 import i18n from "../locale/i18next";
+import storage from "../state/storage";
 
+const auth = storage.getItem("auth");
+console.log(auth);
 axios.interceptors.request.use((request) => {
   request.headers["Accept-Language"] = i18n.language;
+  // request.headers["Authorization"] = header;
+
   return request;
 });
 
@@ -24,4 +29,12 @@ export const getUserById = (id) => {
 
 export const logIn = (body) => {
   return axios.post("/api/1.0/auth", body);
+};
+
+export const updateUser = (id, body, header) => {
+  return axios.put(`/api/1.0/users/${id}`, body, {
+    headers: {
+      Authorization: header,
+    },
+  });
 };

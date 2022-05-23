@@ -2,8 +2,8 @@ import React from "react";
 import Spinner from "./Spinner";
 
 export default function ButtonWithProgress({
-  disabled,
   apiStatus,
+  disabled = apiStatus === "isPending",
   onClick,
   children,
 }) {

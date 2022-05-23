@@ -193,6 +193,24 @@ describe("Login page", () => {
       expect(authFields.includes("username")).toBeTruthy();
       expect(authFields.includes("image")).toBeTruthy();
     });
+
+    it("stores auth header value in storage", async () => {
+      server.use(
+        rest.post("/api/1.0/auth", (req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.json({ id: 5, username: "user5", image: null, token: "token" })
+          );
+        })
+      );
+
+      renderSetup("user5@mail.com");
+      userEvent.click(loginButton);
+      const spinner = screen.queryByRole("status", { hidden: true });
+      await waitForElementToBeRemoved(spinner);
+      const storedState = storage.getItem("auth");
+      expect(storedState.header).toBe("Bearer token");
+    });
   });
 
   describe("i18n", () => {
