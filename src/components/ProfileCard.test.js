@@ -5,6 +5,8 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "../test-utils/testing-library-utils";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import ProfileCard from "./ProfileCard";
 
 import { rest } from "msw";
@@ -44,7 +46,11 @@ describe("Profile Card", () => {
       header: "auth header value",
     });
 
-    render(<ProfileCard user={user} />);
+    render(
+      <Router>
+        <ProfileCard user={user} />
+      </Router>
+    );
   }
 
   let saveButton;

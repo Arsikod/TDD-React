@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteUser, updateUser } from "../api/apiCalls";
 import defaultProfileImg from "../assets/profile.png";
 import { useAuthContext } from "../context/AuthContextProvider";
@@ -8,6 +9,7 @@ import Modal from "./Modal";
 
 export default function ProfileCard({ user }) {
   const { auth, setAuth } = useAuthContext();
+  const navigate = useNavigate();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [apiStatus, setApiStatus] = useState("isIdle");
@@ -38,6 +40,7 @@ export default function ProfileCard({ user }) {
 
     try {
       await deleteUser(user.id);
+      navigate("/");
     } catch (error) {
     } finally {
       setDeleteApiStatus("isIdle");
