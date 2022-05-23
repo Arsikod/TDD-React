@@ -349,4 +349,16 @@ describe("Delete user", () => {
 
     await screen.findByTestId("home-page");
   });
+
+  it("displays login and signup on navbar after deleting user", async () => {
+    await setupLoggedInUserPage();
+    userEvent.click(deleteButton);
+    userEvent.click(
+      screen.queryByRole("button", {
+        name: "Yes",
+      })
+    );
+
+    await screen.findByRole("link", { name: "Login" });
+  });
 });

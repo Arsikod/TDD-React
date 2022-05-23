@@ -41,6 +41,7 @@ export default function ProfileCard({ user }) {
     try {
       await deleteUser(user.id);
       navigate("/");
+      setAuth({ isLoggedIn: false });
     } catch (error) {
     } finally {
       setDeleteApiStatus("isIdle");
